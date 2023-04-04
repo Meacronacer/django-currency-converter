@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="card box-shadow m-2 form-wrap">
+    <div class="card-header text-center">
+            <h5>Currency Converter</h5>
+    </div>
+    <form action="" method="POST">
+    {% csrf_token %}
+    <div class="row r1">
+            <div class="col-auto">
+                <label for="amount"><strong>Amount</strong></label>
+                <input id="amount" class="form-control" type="number" PLACEHOLDER="enter the number" name="from-amount" {% if from_amount %} value="{{ from_amount }}" {% endif %}>
+            </div>
+
+
+            <div class="col-auto">
+                <label for="from"><strong>From</strong></label>
+                <select id="from" class="form-control" name="from-curr">
+                    {% for curr in currency %}
+                    <option {% if from_curr == curr%}selected{% endif %}>{{ curr }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+
+            <div class="col-auto">
+                <label for="to"><strong>To</strong></label>
+                <select id='to' class="form-control" name="to-curr">
+                    {% for curr in currency reversed %}
+                    <option {% if to_curr == curr%}selected{% endif %}>{{ curr }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-auto bt">
+                <button class="btn btn-primary" type="submit">Convert</button>
+            </div>
+
+    </div>
+</form>
+        {% if converted_amount %}
+        <br>
+        <div class="col-auto">
+            <h6>{{ from_amount }} {{ from_curr }} = <br>{{ converted_amount }} {{ to_curr }}</h6>
+        </div>
+        {% endif %}
+</div>
+</div>
+
+{% endblock %}
